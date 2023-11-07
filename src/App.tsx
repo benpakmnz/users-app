@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Avatar, Button } from "@mui/material";
 import {
   IFilterParams,
   IBaseQueryParams,
@@ -8,7 +7,11 @@ import {
   TGender,
   TNat,
 } from "./Interfaces";
-import FilterComponent from "./FilterComponent";
+import FilterComponent from "./Components/FilterComponent";
+import UsersTable from "./Components/usersTable/UsersTable";
+import CustomPagination from "./Components/CustomPagination";
+import { Dialog } from "@mui/material";
+import UserDialog from "./Components/UserDialog";
 
 const App: React.FC = () => {
   const [usersPages, setUsersPages] = useState<Map<number, IUser[]>>(new Map());
@@ -17,6 +20,7 @@ const App: React.FC = () => {
     gender: TGender | null;
     nat: TNat | null;
   }>({ gender: null, nat: null });
+  const [selectedUser, setSelectedUser] = useState<IUser | null>();
 
   const baseQueryParams: IBaseQueryParams = {
     results: 10,
@@ -74,13 +78,12 @@ const App: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(usersPages);
-  }, [usersPages]);
-
-  useEffect(() => {
-    console.log(currentPage);
-  }, [currentPage]);
+  const onUserSelected = (userEmail: string) => {
+    const selected = usersPages
+      .get(currentPage)
+      ?.find((user) => user.login.username === userEmail);
+    selected && setSelectedUser(selected);
+  };
 
   useEffect(() => {
     getUsers(1);
@@ -88,34 +91,29 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Button
-        disabled={currentPage >= baseQueryParams.maxPages}
-        onClick={() => handlePageUpdate(currentPage + 1)}
-      >
-        +1
-      </Button>
-      <Button
-        disabled={currentPage === 1}
-        onClick={() => handlePageUpdate(currentPage - 1)}
-      >
-        -1
-      </Button>
-      <Button
-        disabled={currentPage >= baseQueryParams.maxPages}
-        onClick={() => handlePageUpdate(currentPage + 100)}
-      >
-        +100
-      </Button>
       <FilterComponent onSubmit={handleFilter} />
-      <h1>{currentPage}</h1>
-      <ul>
-        {usersPages.get(currentPage)?.map((user) => (
-          <li key={user.email}>
-            <Avatar src={user.picture["large"]} />
-            {`${user.name.title} ${user.name.first} ${user.name.last} ${user.nat}`}
-          </li>
-        ))}
-      </ul>
+      <UsersTable
+        usersList={usersPages.get(currentPage)}
+        onUserSelected={onUserSelected}
+      />
+      <CustomPagination
+        count={baseQueryParams.maxPages}
+        currentPage={currentPage}
+        onChange={handlePageUpdate}
+      />
+      {selectedUser && (
+        <Dialog
+          onClose={() => setSelectedUser(null)}
+          open={!!selectedUser}
+          fullWidth
+          maxWidth="md"
+        >
+          <UserDialog
+            selectedUser={selectedUser}
+            onClose={() => setSelectedUser(null)}
+          />
+        </Dialog>
+      )}
     </>
   );
 };

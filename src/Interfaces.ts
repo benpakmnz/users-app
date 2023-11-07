@@ -5,11 +5,14 @@ export interface IUserName {
 }
 
 export interface IUser {
+  login: { username: string };
   name: IUserName;
   email: string;
   phone: string;
   gender: TGender;
-  city: string;
+  location: {
+    city: string;
+  };
   dob: number;
   nat: TNat;
   picture: { [key: string]: string };

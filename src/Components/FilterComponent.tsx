@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { IFilterParams, genderOptions, nationalityOptions } from "./Interfaces";
+import {
+  IFilterParams,
+  genderOptions,
+  nationalityOptions,
+} from "../Interfaces";
 import { Autocomplete, Button, TextField } from "@mui/material";
 
 const FilterComponent: React.FC<{
@@ -32,7 +36,9 @@ const FilterComponent: React.FC<{
         renderInput={(params) => <TextField {...params} label="Nationality" />}
       />
 
-      <Button onClick={() => props.onSubmit(filterBy)}>submit</Button>
+      <Button onClick={() => props.onSubmit(filterBy)} variant="outlined">
+        FILTER
+      </Button>
     </>
   );
 };
