@@ -21,7 +21,7 @@ const App: React.FC = () => {
     gender: TGender | null;
     nat: TNat | null;
   }>({ gender: null, nat: null });
-  const [selectedUser, setSelectedUser] = useState<IUser | null>();
+  const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
 
   const baseQueryParams: IBaseQueryParams = {
     results: 10,
@@ -111,17 +111,19 @@ const App: React.FC = () => {
           onChange={handlePageUpdate}
         />
       </Grid>
-      <Dialog
-        onClose={() => setSelectedUser(null)}
-        open={!!selectedUser}
-        fullWidth
-        maxWidth="md"
-      >
-        <UserDialog
-          selectedUser={selectedUser!}
+      {selectedUser && (
+        <Dialog
           onClose={() => setSelectedUser(null)}
-        />
-      </Dialog>
+          open={!!selectedUser}
+          fullWidth
+          maxWidth="md"
+        >
+          <UserDialog
+            selectedUser={selectedUser}
+            onClose={() => setSelectedUser(null)}
+          />
+        </Dialog>
+      )}
     </Grid>
   );
 };
