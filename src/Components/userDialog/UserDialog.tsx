@@ -12,6 +12,7 @@ import { CloseOutlined } from "@mui/icons-material";
 import FaceIcon from "@mui/icons-material/Face";
 import Face2Icon from "@mui/icons-material/Face2";
 import "./user-dialog-styles.scss";
+import { dateConverter } from "../../utils/date-converter";
 
 const UserDialog: React.FC<{ selectedUser: IUser; onClose: () => void }> = (
   props
@@ -60,7 +61,7 @@ const UserDialog: React.FC<{ selectedUser: IUser; onClose: () => void }> = (
       )}
       {setInfoItem("NATIONALITY", nat)}
       {setInfoItem("CITY", <span className="capitalize">{location.city}</span>)}
-      {setInfoItem("DATE OF BIRTH", new Date(dob).toDateString())}
+      {setInfoItem("DATE OF BIRTH", dateConverter(dob))}
     </Grid>
   );
 };

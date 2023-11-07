@@ -3,6 +3,7 @@ import React from "react";
 import { IUser } from "../../shared/interfaces";
 import FaceIcon from "@mui/icons-material/Face";
 import Face2Icon from "@mui/icons-material/Face2";
+import { dateConverter } from "../../utils/date-converter";
 
 const UserRow: React.FC<{ user: IUser; onClick: () => void }> = (props) => {
   const { name, email, phone, gender, location, dob, nat, picture } =
@@ -23,7 +24,7 @@ const UserRow: React.FC<{ user: IUser; onClick: () => void }> = (props) => {
         </Tooltip>
       </TableCell>
       <TableCell className="capitalize">{location.city}</TableCell>
-      <TableCell>{new Date(dob).toDateString()}</TableCell>
+      <TableCell>{dateConverter(dob)}</TableCell>
       <TableCell>{nat}</TableCell>
     </TableRow>
   );
