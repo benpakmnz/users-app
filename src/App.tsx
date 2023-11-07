@@ -6,7 +6,7 @@ import {
   IUser,
   TGender,
   TNat,
-} from "./Interfaces";
+} from "./shared/interfaces";
 import FilterComponent from "./Components/FilterComponent";
 import UsersTable from "./Components/usersTable/UsersTable";
 import CustomPagination from "./Components/CustomPagination";

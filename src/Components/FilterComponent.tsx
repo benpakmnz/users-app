@@ -3,7 +3,7 @@ import {
   IFilterParams,
   genderOptions,
   nationalityOptions,
-} from "../Interfaces";
+} from "../shared/interfaces";
 import { Autocomplete, Button, Grid, TextField } from "@mui/material";
 
 const FilterComponent: React.FC<{

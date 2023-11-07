@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import UserRow from "./UserRow";
-import { IUser } from "../../Interfaces";
+import { IUser } from "../../shared/interfaces";
 
 const UsersTable: React.FC<{
   usersList?: IUser[];
