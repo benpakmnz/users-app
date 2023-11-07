@@ -4,7 +4,7 @@ import {
   genderOptions,
   nationalityOptions,
 } from "../Interfaces";
-import { Autocomplete, Button, TextField } from "@mui/material";
+import { Autocomplete, Button, Grid, TextField } from "@mui/material";
 
 const FilterComponent: React.FC<{
   onSubmit: (filterBy: IFilterParams) => void;
@@ -15,31 +15,39 @@ const FilterComponent: React.FC<{
   });
 
   return (
-    <>
-      <Autocomplete
-        disablePortal
-        id="combo-box-demo"
-        options={genderOptions}
-        sx={{ width: 300 }}
-        onChange={(_event, value) =>
-          setFilterBy({ ...filterBy, gender: value })
-        }
-        renderInput={(params) => <TextField {...params} label="Gender" />}
-      />
-
-      <Autocomplete
-        disablePortal
-        id="combo-box-demo"
-        options={nationalityOptions}
-        sx={{ width: 300 }}
-        onChange={(_event, value) => setFilterBy({ ...filterBy, nat: value })}
-        renderInput={(params) => <TextField {...params} label="Nationality" />}
-      />
-
-      <Button onClick={() => props.onSubmit(filterBy)} variant="outlined">
-        FILTER
-      </Button>
-    </>
+    <Grid container spacing={2} className="flex-item end">
+      <Grid item>
+        <Autocomplete
+          disablePortal
+          size="small"
+          id="gender-combo-box"
+          options={genderOptions}
+          sx={{ width: 300 }}
+          onChange={(_event, value) =>
+            setFilterBy({ ...filterBy, gender: value })
+          }
+          renderInput={(params) => <TextField {...params} label="Gender" />}
+        />
+      </Grid>
+      <Grid item>
+        <Autocomplete
+          disablePortal
+          size="small"
+          id="nat-combo-box"
+          options={nationalityOptions}
+          sx={{ width: 300 }}
+          onChange={(_event, value) => setFilterBy({ ...filterBy, nat: value })}
+          renderInput={(params) => (
+            <TextField {...params} label="Nationality" />
+          )}
+        />
+      </Grid>
+      <Grid item>
+        <Button onClick={() => props.onSubmit(filterBy)} variant="contained">
+          FILTER
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 

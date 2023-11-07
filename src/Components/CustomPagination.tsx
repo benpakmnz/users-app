@@ -10,6 +10,7 @@ const CustomPagination: React.FC<{
     <Stack spacing={2}>
       <Pagination
         count={props.count}
+        siblingCount={11}
         variant="outlined"
         color="primary"
         onChange={(_event, page) => props.onChange(page)}

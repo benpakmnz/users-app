@@ -10,8 +10,9 @@ import {
 import FilterComponent from "./Components/FilterComponent";
 import UsersTable from "./Components/usersTable/UsersTable";
 import CustomPagination from "./Components/CustomPagination";
-import { Dialog } from "@mui/material";
-import UserDialog from "./Components/UserDialog";
+import { Dialog, Divider, Grid } from "@mui/material";
+import UserDialog from "./Components/userDialog/UserDialog";
+import "./theme/index.scss";
 
 const App: React.FC = () => {
   const [usersPages, setUsersPages] = useState<Map<number, IUser[]>>(new Map());
@@ -90,31 +91,38 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <FilterComponent onSubmit={handleFilter} />
-      <UsersTable
-        usersList={usersPages.get(currentPage)}
-        onUserSelected={onUserSelected}
-      />
-      <CustomPagination
-        count={baseQueryParams.maxPages}
-        currentPage={currentPage}
-        onChange={handlePageUpdate}
-      />
-      {selectedUser && (
-        <Dialog
+    <Grid container p={6}>
+      <Grid item xs={12}>
+        <FilterComponent onSubmit={handleFilter} />
+      </Grid>
+      <Grid item xs={12} my={3}>
+        <Divider />
+      </Grid>
+      <Grid item xs={12}>
+        <UsersTable
+          usersList={usersPages.get(currentPage)}
+          onUserSelected={onUserSelected}
+        />
+      </Grid>
+      <Grid item xs={12} my={3} className="flex-item center">
+        <CustomPagination
+          count={baseQueryParams.maxPages}
+          currentPage={currentPage}
+          onChange={handlePageUpdate}
+        />
+      </Grid>
+      <Dialog
+        onClose={() => setSelectedUser(null)}
+        open={!!selectedUser}
+        fullWidth
+        maxWidth="md"
+      >
+        <UserDialog
+          selectedUser={selectedUser!}
           onClose={() => setSelectedUser(null)}
-          open={!!selectedUser}
-          fullWidth
-          maxWidth="md"
-        >
-          <UserDialog
-            selectedUser={selectedUser}
-            onClose={() => setSelectedUser(null)}
-          />
-        </Dialog>
-      )}
-    </>
+        />
+      </Dialog>
+    </Grid>
   );
 };
 
