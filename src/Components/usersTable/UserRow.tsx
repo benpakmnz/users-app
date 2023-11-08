@@ -1,6 +1,6 @@
 import { TableRow, TableCell, Avatar, Tooltip } from "@mui/material";
 import React from "react";
-import { IUser } from "../../shared/interfaces";
+import { IUser } from "../../shared/Interfaces";
 import FaceIcon from "@mui/icons-material/Face";
 import Face2Icon from "@mui/icons-material/Face2";
 import { dateConverter } from "../../utils/date-converter";

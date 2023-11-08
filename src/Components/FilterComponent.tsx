@@ -3,16 +3,13 @@ import {
   IFilterParams,
   genderOptions,
   nationalityOptions,
-} from "../shared/interfaces";
+} from "../shared/Interfaces";
 import { Autocomplete, Button, Grid, TextField } from "@mui/material";
 
 const FilterComponent: React.FC<{
   onSubmit: (filterBy: IFilterParams) => void;
 }> = (props) => {
-  const [filterBy, setFilterBy] = useState<IFilterParams>({
-    gender: null,
-    nat: null,
-  });
+  const [filterBy, setFilterBy] = useState<IFilterParams>({});
 
   return (
     <Grid container spacing={2} className="flex-item end">
@@ -24,7 +21,7 @@ const FilterComponent: React.FC<{
           options={genderOptions}
           sx={{ width: 300 }}
           onChange={(_event, value) =>
-            setFilterBy({ ...filterBy, gender: value })
+            setFilterBy({ ...filterBy, gender: value ? value : undefined })
           }
           renderInput={(params) => <TextField {...params} label="Gender" />}
         />
@@ -36,7 +33,9 @@ const FilterComponent: React.FC<{
           id="nat-combo-box"
           options={nationalityOptions}
           sx={{ width: 300 }}
-          onChange={(_event, value) => setFilterBy({ ...filterBy, nat: value })}
+          onChange={(_event, value) =>
+            setFilterBy({ ...filterBy, nat: value ? value : undefined })
+          }
           renderInput={(params) => (
             <TextField {...params} label="Nationality" />
           )}

@@ -1,5 +1,5 @@
 import React from "react";
-import { IUser } from "../../shared/interfaces";
+import { IUser } from "../../shared/Interfaces";
 import {
   Avatar,
   Grid,

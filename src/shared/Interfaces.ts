@@ -25,8 +25,8 @@ export interface IBaseQueryParams {
 }
 
 export interface IFilterParams {
-  gender: TGender | null;
-  nat: TNat | null;
+  gender?: TGender;
+  nat?: TNat;
 }
 
 export const genderOptions = ["male", "female"] as const;
