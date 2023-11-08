@@ -19,16 +19,15 @@ export const baseQueryParams: IBaseQueryParams = {
 
 const handleQueryParams = (page: number, filterBy?: IFilterParams): string => {
   let updatedQueryParams = `?results=${baseQueryParams.results}&page=${page}`;
-  if (filterBy?.gender) {
-    updatedQueryParams = `${updatedQueryParams}&gender=${filterBy.gender}`;
-  }
-
   if (filterBy?.nat) {
     updatedQueryParams = `${updatedQueryParams}&nat=${filterBy.nat}`;
   }
-  if (!filterBy?.gender && !filterBy?.nat) {
+  if (filterBy?.gender) {
+    updatedQueryParams = `${updatedQueryParams}&gender=${filterBy.gender}`;
+  } else {
+    // bug in API - when filtering by gender and adding seed - false results
+    // only pass seed if no filter by gender
     updatedQueryParams = `${updatedQueryParams}&seed=users_ls`;
   }
-
   return updatedQueryParams;
 };

@@ -5,19 +5,19 @@ import UsersTable from "../Components/usersTable/UsersTable";
 import CustomPagination from "../Components/CustomPagination";
 import { Dialog, Divider, Grid } from "@mui/material";
 import UserDialog from "../Components/userDialog/UserDialog";
-import { StoreContext } from "../utils/store";
+import { StoreContext, ctx } from "../utils/store";
 import { baseQueryParams, getUsers } from "../Services/userService";
 
 const UsersPages: React.FC = () => {
   const { usersPages, addPages, setCurrentPage, currentFilter, currentPage } =
-    React.useContext<any>(StoreContext);
+    React.useContext<ctx>(StoreContext);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
 
   const handlePageUpdate = async (page: number) => {
     if (!usersPages.has(page)) {
-      const res = await getUsers(page);
+      const res = await getUsers(page, currentFilter);
       if (res) {
-        addPages(res.info.page, res.results, false);
+        addPages(res.info.page, res.results);
       }
     } else {
       setCurrentPage(page);
@@ -25,9 +25,8 @@ const UsersPages: React.FC = () => {
   };
 
   const handleFilter = async (filterBy: IFilterParams) => {
-    const isReset = filterBy !== currentFilter;
     const res = await getUsers(1, filterBy);
-    addPages(res.info.page, res.results, isReset);
+    addPages(res.info.page, res.results, filterBy);
     setCurrentPage(res.info.page);
   };
 
