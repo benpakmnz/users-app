@@ -1,10 +1,12 @@
 import axios from "axios";
 import { IBaseQueryParams, IFilterParams } from "../shared/Interfaces";
 
+const usersApi = process.env.REACT_APP_USERS_API_BASE_URL;
+
 export const getUsers = async (page: number, filterBy?: IFilterParams) => {
   let params = handleQueryParams(page, filterBy);
   try {
-    const res = await axios.get(`https://randomuser.me/api/1.0/${params}`);
+    const res = await axios.get(`${usersApi}/${params}`);
     return res.data;
   } catch (err) {
     console.error(err);
